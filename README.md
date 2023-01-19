@@ -29,7 +29,7 @@ gem install urest
 
 If you want to develop or extend the server, just use the following instruction
 ```
-git clone https://github.com/etm/urua
+git clone https://github.com/etm/urest
 git clone https://github.com/fpauker/ur-sock
 ```
 
@@ -37,7 +37,7 @@ Just follow the install instructions of the 2 projects.
 
 ### Starting the server
 
-To scaffold a server, first create a directory, then use the urua
+To scaffold a server, first create a directory, then use the urest
 
 ```
 mkdir -p ~/run/urest

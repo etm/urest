@@ -1,6 +1,5 @@
 #!/usr/bin/ruby
-$dev = true
-require_relative '../lib/urest'
+require 'urest'
 ### add stuff if necessary
 
 Riddl::Server.new(UREST::SERVER, :host => 'localhost', :port => 8198) do |opts|
