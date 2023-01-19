@@ -1,0 +1,147 @@
+<description xmlns="http://riddl.org/ns/description/1.0" xmlns:ann="http://riddl.org/ns/annotation/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <message name="file">
+    <parameter name="file" mimetype="application/octet-stream"/>
+  </message>
+  <message name="named_file">
+    <parameter name="name" type="string"/>
+    <parameter name="file" mimetype="application/octet-stream"/>
+  </message>
+  <message name="properties">
+    <parameter name="properties" mimetype="application/json"/>
+  </message>
+  <message name="text">
+    <parameter name="message" type="string"/>
+  </message>
+  <message name="value">
+    <parameter name="value" mimetype="text/plain"/>
+  </message>
+  <message name="tbit">
+    <parameter name="value" type="string">
+      <param name="pattern">[01]+</param>
+    </parameter>
+  </message>
+  <message name="tdouble">
+    <parameter name="value" type="double"/>
+  </message>
+  <message name="tint">
+    <parameter name="value" type="integer"/>
+  </message>
+  <message name="pval">
+    <parameter name="value" type="integer">
+      <choice>
+        <value>on</value>
+        <value>off</value>
+      </choice>
+    </parameter>
+  </message>
+  <message name="sval">
+    <parameter name="value" type="integer">
+      <param name="minInclusive">0</param>
+      <param name="maxInclusive">100</param>
+    </parameter>
+  </message>
+  <resource>
+    <get out="properties"/>
+    <resource relative="messsages">
+      <resource relative="log">
+        <put in="text"/>
+      </resource>
+      <resource relative="popup">
+        <put in="text"/>
+        <delete/>
+      </resource>
+      <resource relative="safety">
+        <put in="text"/>
+        <delete/>
+      </resource>
+    </resource>
+    <resource relative="registers">
+      <resource relative="input">
+        <resource relative="bit">
+          <resource relative="\d+">
+            <get out="value"/>
+            <put in="tbit"/>
+          </resource>
+        </resource>
+        <resource relative="double">
+          <resource relative="\d+">
+            <get out="value"/>
+            <put in="tdouble"/>
+          </resource>
+        </resource>
+        <resource relative="int">
+          <resource relative="\d+">
+            <get out="value"/>
+            <put in="tint"/>
+          </resource>
+        </resource>
+      </resource>
+      <resource relative="output">
+        <resource relative="bit">
+          <resource relative="\d+">
+            <get out="value"/>
+          </resource>
+        </resource>
+        <resource relative="double">
+          <resource relative="\d+">
+            <get out="value"/>
+          </resource>
+        </resource>
+        <resource relative="int">
+          <resource relative="\d+">
+            <get out="value"/>
+          </resource>
+        </resource>
+      </resource>
+    </resource>
+    <resource relative="model">
+      <get out="value"/>
+    </resource>
+    <resource relative="serialnumber">
+      <get out="value"/>
+    </resource>
+    <resource relative="state">
+      <get out="properties"/>
+      <resource relative="mode">
+        <get out="value"/>
+      </resource>
+      <resource relative="power">
+        <get out="value"/>
+        <put in="pval"/>
+      </resource>
+      <resource relative="remote">
+        <get out="value"/>
+      </resource>
+      <resource relative="program">
+        <get out="value"/>
+      </resource>
+      <resource relative="program_state">
+        <get out="value"/>
+      </resource>
+      <resource relative="safety_mode">
+        <get out="value"/>
+      </resource>
+      <resource relative="speed">
+        <get out="value"/>
+        <put in="sval"/>
+      </resource>
+      <resource relative="speed_scaling">
+        <get out="value"/>
+      </resource>
+    </resource>
+    <resource relative="programs">
+      <get out="properties"/>
+      <resource>
+        <get out="file"/>
+        <post in="named_file"/>
+        <resource relative="fork">
+          <get/>
+          <put/>
+        </resource>
+        <resource relative="wait">
+          <put/>
+        </resource>
+      </resource>
+    </resource>
+  </resource>
+</description>
