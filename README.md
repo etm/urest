@@ -1,6 +1,6 @@
-<img align="right" height="100" src="https://github.com/fpauker/urua/blob/master/logo/urua_logo.png">
+<img align="right" height="100" src="https://github.com/etm/urest/blob/master/logo/urest_logo.png">
 
-# URUA
+# UREST
 
 A simple REST server for Universal robots in ruby, which uses the ur-sock library.
 
