@@ -1,4 +1,4 @@
-<img align="right" height="100" src="https://github.com/etm/urest/blob/master/logo/urest_logo.png">
+<img align="right" height="100" src="https://github.com/etm/urest/blob/main/logo/urest_logo.png">
 
 # UREST
 
