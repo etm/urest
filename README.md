@@ -16,10 +16,10 @@ This server has no special prerequisites. But it is always advisable to prepare
 your machine for installation and development, and install some common
 libraries and headers, which are used by common dependencies:
 
-    * Windows 10 users with WSL2 can use Fedora/Ubuntu instructions below 
-    * Mac OSX users can use brew: brew install libxml2 libxslt 
-    * Ubuntu (>=20.04) / Debian users can use their package manager: ```sudo apt-get install build-essential ruby-dev libxml2-dev libxslt-dev libz-dev libssl-dev librasqal-dev libraptor2-dev libicu-dev redis```
-    * Fedora (>=32) users can use their package manager: ```sudo dnf install @buildsys-build @development-tools @c-development ruby-devel libxml2-devel libxslt-devel zlib-devel rasqal-devel raptor2-devel libicu-devel redis``` 
+* Windows 10 users with WSL2 can use Fedora/Ubuntu instructions below 
+* Mac OSX users can use brew: brew install libxml2 libxslt 
+* Ubuntu (>=20.04) / Debian users can use their package manager: ```sudo apt-get install build-essential ruby-dev libxml2-dev libxslt-dev libz-dev libssl-dev librasqal-dev libraptor2-dev libicu-dev redis```
+* Fedora (>=32) users can use their package manager: ```sudo dnf install @buildsys-build @development-tools @c-development ruby-devel libxml2-devel libxslt-devel zlib-devel rasqal-devel raptor2-devel libicu-devel redis``` 
 
 You cann the UREST gem with:
 
