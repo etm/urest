@@ -203,6 +203,29 @@ module UREST
     end
   end  #}}}
 
+  class GetProg < Riddl::Implementation #{{{
+    def response
+      opts = @a[0]
+      fname = File.join(opts['dir'],@r[-1] + '.urp')
+      if opts['progs'].include? fname
+        return Riddl::Parameter::Complex.new('file','application/octet-stream',UREST::download_program(opts,fname),File.basename(fname))
+      else
+        @status = 403
+      end
+      nil
+    end
+   end  #}}}
+
+  class DeleteSafetyMessage < Riddl::Implementation #{{{
+    def response
+      opts = @a[0]
+      UREST::protect_reconnect_run(opts) do
+        opts['dash'].close_safety_popup
+      end
+      nil
+    end
+  end  #}}}
+
   class SetInt < Riddl::Implementation #{{{
     def response
       opts = @a[0]
@@ -337,6 +360,11 @@ module UREST
         run GetValues, [ 'messages', 'registers', 'model', 'serialnumber', 'state', 'programs'] if get
         on resource 'model' do #{{{
           run GetValue, opts['model'] if get
+        end #}}}
+        on resource 'messages' do #{{{
+          on resource 'safety' do
+            run DeleteSafetyMessage, opts if delete
+          end
         end #}}}
         on resource 'serialnumber' do #{{{
           run GetValue, opts['sn'] if get

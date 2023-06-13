@@ -3,7 +3,7 @@ $dev = true
 require_relative '../lib/urest'
 ### add stuff if necessary
 
-Riddl::Server.new(UREST::SERVER, :host => 'localhost', :port => 8197) do |opts|
+Riddl::Server.new(UREST::SERVER, :host => 'localhost', :port => 8198) do |opts|
   accessible_description true
   cross_site_xhr true
   process_out false

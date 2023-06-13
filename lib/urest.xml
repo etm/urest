@@ -42,7 +42,7 @@
   </message>
   <resource>
     <get out="properties"/>
-    <resource relative="messsages">
+    <resource relative="messages">
       <resource relative="log">
         <put in="text"/>
       </resource>
