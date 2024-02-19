@@ -121,11 +121,16 @@ module UREST
 
   def self::get_robot_programs(opts) #{{{
     progs = []
+    once  = false
     begin
-      progs = opts['ssh'].exec!('ls ' + File.join(opts['dir'],'*.urp') + ' 2>/dev/null').split("\n")
+      progs = opts['ssh'].exec!('ls ' + File.join(opts['dir'],'*.urp') + ' ' + File.join(opts['dir'],'**','*.urp') + ' 2>/dev/null').split("\n")
       progs.shift if progs[0] =~ /^bash:/
     rescue => e
       UREST::ssh_start opts
+      unless once
+        once = true
+        retry
+      end
     end
     progs
   end #}}}
@@ -157,7 +162,7 @@ module UREST
   class GetProg < Riddl::Implementation #{{{
     def response
       opts = @a[0]
-      fname = File.join(opts['dir'],@r[-1] + '.urp')
+      fname = File.join(opts['dir'],@r[1..-1].join('/'))
       if opts['progs'].include? fname
         return Riddl::Parameter::Complex.new('file','application/octet-stream',UREST::download_program(opts,fname),File.basename(fname))
       else
@@ -169,8 +174,8 @@ module UREST
   class ForkProg < Riddl::Implementation #{{{
     def response
       opts = @a[0]
-      fname = File.join(opts['dir'],@r[-2])
-      if opts['progs'].include? fname + '.urp'
+      fname = File.join(opts['dir'],@r[1..-2].join('/'))
+      if opts['progs'].include? fname
         UREST::start_program(opts,fname)
       else
         @status = 403
@@ -181,8 +186,8 @@ module UREST
   class WaitProg < Riddl::Implementation #{{{
     def response
       opts = @a[0]
-      fname = File.join(opts['dir'],@r[-2])
-      if opts['progs'].include? fname + '.urp'
+      fname = File.join(opts['dir'],@r[1..-2].join('/'))
+      if opts['progs'].include? fname
         if @h['CPEE_CALLBACK']
           EM.defer do
             UREST::start_program(opts,fname)
@@ -202,19 +207,6 @@ module UREST
       nil
     end
   end  #}}}
-
-  class GetProg < Riddl::Implementation #{{{
-    def response
-      opts = @a[0]
-      fname = File.join(opts['dir'],@r[-1] + '.urp')
-      if opts['progs'].include? fname
-        return Riddl::Parameter::Complex.new('file','application/octet-stream',UREST::download_program(opts,fname),File.basename(fname))
-      else
-        @status = 403
-      end
-      nil
-    end
-   end  #}}}
 
   class DeleteSafetyMessage < Riddl::Implementation #{{{
     def response
@@ -269,7 +261,7 @@ module UREST
 
         # Functionality for threading in loop
         opts['doit_state'] = Time.now.to_i
-        opts['doit_progs'] = Time.now.to_i
+        opts['doit_progs'] = Time.now.to_i - 11
         opts['doit_rtde'] = Time.now.to_i
 
         # Serious comment (we do the obvious stuff)
@@ -405,15 +397,18 @@ module UREST
             run GetValue, opts['ss'] if get
           end
         end #}}}
-        on resource 'programs' do
-          run GetValues, opts['progs'].map{|f|File.basename(f,'.urp')} if get
-          on resource do
-            run GetProg, opts if get
-            on resource 'fork' do
-              run ForkProg, opts if put
-            end
-            on resource 'wait' do
-              run WaitProg, opts if put
+        on resource 'programs' do |r|
+          run GetValues, opts['progs'].filter{ |e| e =~ /^\/#{r[:r].join('/')}\/[a-zA-Z0-9_-]+\.urp/ }.map{ |e| File.basename(e) } if get
+          on resource '[a-zA-Z0-9_-]+' do |r|
+            run GetValues, opts['progs'].filter{ |e| e =~ /^\/#{r[:r].join('/')}\/[a-zA-Z0-9_-]+\.urp/ }.map{ |e| File.basename(e) } if get
+            on resource '[a-zA-Z0-9_-]+\.urp' do
+              run GetProg, opts if get
+              on resource 'fork' do
+                run ForkProg, opts if put
+              end
+              on resource 'wait' do
+                run WaitProg, opts if put
+              end
             end
           end
         end

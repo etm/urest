@@ -131,15 +131,18 @@
     </resource>
     <resource relative="programs">
       <get out="properties"/>
-      <resource>
-        <get out="file"/>
+      <resource relative="[a-zA-Z0-9_-]+" recursive="true">
+        <get out="properties"/>
         <post in="named_file"/>
-        <resource relative="fork">
-          <get/>
-          <put/>
-        </resource>
-        <resource relative="wait">
-          <put/>
+        <resource relative="[a-zA-Z0-9_-]+\.urp">
+          <get out="file"/>
+          <resource relative="fork">
+            <get/>
+            <put/>
+          </resource>
+          <resource relative="wait">
+            <put/>
+          </resource>
         </resource>
       </resource>
     </resource>
