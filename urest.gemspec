@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name             = "urest"
-  s.version          = "0.99.1"
+  s.version          = "0.99.2"
   s.platform         = Gem::Platform::RUBY
-  s.license          = "GPL-3.0"
+  s.license          = "LGPL-3.0-or-later"
   s.summary          = "REST Server for Universal Robots"
 
   s.description      = "REST Server for Universal Robots. See https://github.com/etm/urest"
