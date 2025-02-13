@@ -142,7 +142,7 @@ module UREST
   def self::start_program(opts,fname) #{{{
     unless UREST::robotprogram_running?(opts)
       UREST::protect_reconnect_run(opts) do
-        opts['dash'].load_program(fname)
+        opts['dash'].load_program(fname.sub(/\.urp/,''))
         opts['dash'].start_program
       end
     end
