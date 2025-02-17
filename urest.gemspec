@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name             = "urest"
-  s.version          = "0.99.3"
+  s.version          = "0.99.4"
   s.platform         = Gem::Platform::RUBY
   s.license          = "LGPL-3.0-or-later"
   s.summary          = "REST Server for Universal Robots"
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.email            = 'juergen.mangler@gmail.com'
   s.homepage         = 'https://github.com/etm/urest'
 
-  s.add_runtime_dependency 'riddl', '~>0', '>=0.120'
+  s.add_runtime_dependency 'riddl', '~>1', '>=1.0'
   s.add_runtime_dependency 'ur-sock', '~>1.0'
   s.add_runtime_dependency 'daemonite', '~>0.5', '>=0.5.9'
   s.add_runtime_dependency 'net-ssh', '~>7.0'
