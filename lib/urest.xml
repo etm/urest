@@ -37,7 +37,7 @@
   <message name="sval">
     <parameter name="value" type="integer">
       <param name="minInclusive">0</param>
-      <param name="maxInclusive">100</param>
+      <param name="maxInclusive">200</param>
     </parameter>
   </message>
   <resource>
@@ -126,7 +126,7 @@
         <put in="sval"/>
       </resource>
       <resource relative="speed_scaling">
-        <get out="value"/>
+        <get out="tdouble"/>
       </resource>
     </resource>
     <resource relative="programs">

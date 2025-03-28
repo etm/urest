@@ -150,7 +150,13 @@ module UREST
 
   class GetValue < Riddl::Implementation #{{{
     def response
-      Riddl::Parameter::Complex.new('value','text/plain',@a[0])
+      Riddl::Parameter::Complex.new('value','text/plain',@a[0].to_s)
+    end
+  end  #}}}
+  class PutSpeed < Riddl::Implementation #{{{
+    def response
+      @a[1]['speed_slider_fraction'] = @p[0].value.to_i/100.0
+      @a[0].send(@a[1])
     end
   end  #}}}
   class GetValues < Riddl::Implementation #{{{
@@ -265,7 +271,6 @@ module UREST
         opts['doit_rtde'] = Time.now.to_i
 
         # Serious comment (we do the obvious stuff)
-        opts['speed'] = {}
         opts['sn'] = opts['dash'].get_serial_number
         opts['model'] = opts['dash'].get_robot_model
 
@@ -392,6 +397,7 @@ module UREST
           end
           on resource 'speed' do
             run GetValue, opts['ov'] if get
+            run PutSpeed, opts['rtde'], opts['speed'] if put 'sval'
           end
           on resource 'speed_scaling' do
             run GetValue, opts['ss'] if get
