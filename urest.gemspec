@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name             = "urest"
-  s.version          = "0.99.4"
+  s.version          = "0.99.5"
   s.platform         = Gem::Platform::RUBY
   s.license          = "LGPL-3.0-or-later"
   s.summary          = "REST Server for Universal Robots"
